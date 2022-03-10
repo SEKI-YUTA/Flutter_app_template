@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_app_template/services/theme_service.dart';
+import 'package:my_app_template/ui/screens/grid_screen.dart';
 import 'package:my_app_template/ui/screens/sample_screen.dart';
 
 class MainPage extends StatefulWidget {
@@ -13,7 +14,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _currentIndex = 0;
   final _pageWidgets = <Widget>[
-    SampleScreen(text: "1"),
+    ImagesGrid(),
     SampleScreen(text: "2"),
     SampleScreen(text: "3"),
   ];
