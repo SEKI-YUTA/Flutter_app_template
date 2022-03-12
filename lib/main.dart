@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:my_app_template/services/theme_service.dart';
 import 'package:my_app_template/ui/login_page.dart';
@@ -9,7 +10,9 @@ import 'package:my_app_template/ui/screens/loading_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:my_app_template/ui/themes.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
   runApp(const MyApp());
 }
 
@@ -18,7 +21,7 @@ class MyApp extends StatelessWidget {
   Future<bool> haveSeenIntro() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     print('haveseen:${pref.getBool('haveSeenIntro')}');
-    var haveSeen = await pref.getBool('haveSeenIntro') ?? false;
+    bool haveSeen = pref.getBool('haveSeenIntro') ?? false;
     return haveSeen;
   }
 
