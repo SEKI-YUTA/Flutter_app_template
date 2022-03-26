@@ -13,16 +13,17 @@ import 'package:my_app_template/ui/themes.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-  Future<bool> haveSeenIntro() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    print('haveseen:${pref.getBool('haveSeenIntro')}');
-    bool haveSeen = pref.getBool('haveSeenIntro') ?? false;
-    return haveSeen;
+  MyApp({Key? key}) : super(key: key);
+  final _box = GetStorage();
+  final _key = "haveSeenIntro";
+  Future<String> haveSeenIntro() async {
+    bool haveSeen = await _box.read(_key) ?? false;
+    print(haveSeen);
+    return haveSeen.toString();
   }
 
   // This widget is the root of your application.
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      home: haveSeenIntro() == true
+      home: haveSeenIntro() == "true"
           ? LoginPage()
           : IntroductionScreen(
               pages: [
@@ -44,8 +45,7 @@ class MyApp extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.w600)),
               onDone: () async {
                 // When done button is press
-                SharedPreferences pref = await SharedPreferences.getInstance();
-                pref.setBool('haveSeenIntro', true);
+                await _box.write(_key, true);
                 Get.to(LoginPage());
               },
               showNextButton: false,

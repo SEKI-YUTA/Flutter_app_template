@@ -4,6 +4,7 @@ import 'package:my_app_template/services/theme_service.dart';
 import 'package:my_app_template/ui/screens/grid_screen.dart';
 import 'package:my_app_template/ui/screens/list_screen.dart';
 import 'package:my_app_template/ui/screens/sample_screen.dart';
+import 'package:my_app_template/ui/setting_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -23,12 +24,19 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: GestureDetector(
-          child: Icon(Get.isDarkMode ? Icons.wb_sunny : Icons.nightlight),
-          onTap: () {
+        leading: IconButton(
+          onPressed: () {
             ThemeService().switchTheme();
           },
+          icon: Icon(Get.isDarkMode ? Icons.wb_sunny : Icons.nightlight),
         ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Get.to(SettingPage());
+              },
+              icon: Icon(Icons.settings))
+        ],
         title: const Text('MyAppTemplate'),
       ),
       body: IndexedStack(
